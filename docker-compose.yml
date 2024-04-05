@@ -7,6 +7,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres_volume:/var/lib/postgresql/data/
+    env_file:
+      - .env
     environment:
       - POSTGRES_DB = ${DB_NAME}
       - POSTGRES_USER = ${POSTGRES_USERNAME}
@@ -17,4 +19,4 @@ services:
     ports:
       - "8080:8080"
 volumes:
-  postgres_volume
+  postgres_volume:
