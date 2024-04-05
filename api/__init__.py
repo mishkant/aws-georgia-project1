@@ -4,9 +4,19 @@ from flask_migrate import Migrate
 import sys
 import os
 
+db_address = os.environ.get("DB_ADDRESS")
+db_name = os.environ.get("DB_NAME")
+db_port = "5432"
+postgres_username = os.environ.get("POSTGRES_USERNAME")
+postgres_password = os.environ.get("POSTGRES_PASSWORD")
 
 app = Flask(__name__)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{postgres_username}:{postgres_password}@{db_address}:{db_port}/{db_name}"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 class TodoList(db.Model):
     # Table name
